@@ -20,9 +20,7 @@ public class SprintService {
     public List<Sprint> findAllSprints(){
         return this.sprintRepository.findAll();
     }
-    public Sprint createSprint() {
-        Sprint sprint = new Sprint();
-        sprint.setProductBacklogId(1L);
+    public Sprint createSprint(Sprint sprint) {
         return sprintRepository.save(sprint);
     }
 }

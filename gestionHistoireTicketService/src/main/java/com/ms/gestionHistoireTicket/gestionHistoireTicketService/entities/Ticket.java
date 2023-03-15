@@ -12,6 +12,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @MappedSuperclass
 public abstract class Ticket {
-    private String title; //Le titre du ticket
+    private String titre; //Le titre du ticket
     private String description; //La description du ticket
 }

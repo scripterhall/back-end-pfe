@@ -8,6 +8,7 @@ import com.ms.tickettacheservice.entity.TicketTache;
 
 public interface TicketTacheRepository extends JpaRepository<TicketTache,Long> {
     
-    List<TicketTache> findByTitle(String title);
+    List<TicketTache> findByTitre(String titre);
+    List<TicketTache> findByTicketHistoireId(Long id);
     
 }

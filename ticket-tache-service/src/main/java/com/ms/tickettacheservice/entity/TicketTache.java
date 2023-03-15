@@ -47,7 +47,9 @@ public class TicketTache extends Ticket {
     private Long sprintBacklogId;
 
     @Column(name="ticket_histoire_id")
-    private Long ticketHistoryId;
+    private Long ticketHistoireId;
+
+    private String etat;//  en cours .. a verifier .. a faire .. terminer
 
     @Transient
     private Membre membre; 

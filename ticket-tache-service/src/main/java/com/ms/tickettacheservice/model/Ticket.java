@@ -14,8 +14,8 @@ import lombok.ToString;
 @MappedSuperclass
 public class Ticket {
 
-    @Column(unique = true)
-    private String title; //Le titre du ticket
+    @Column(name="titre",unique = true)
+    private String titre; //Le titre du ticket
     private String description; //La description du ticket
     
 }

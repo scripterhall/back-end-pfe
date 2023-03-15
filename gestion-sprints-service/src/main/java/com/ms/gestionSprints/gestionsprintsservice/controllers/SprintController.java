@@ -6,9 +6,10 @@ import com.ms.gestionSprints.gestionsprintsservice.repositories.SprintRepository
 import com.ms.gestionSprints.gestionsprintsservice.services.ProductBacklogService;
 import com.ms.gestionSprints.gestionsprintsservice.services.SprintService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+ 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class SprintController {
     public List<Sprint> getAllSprints() {
         return sprintService.findAllSprints();
     }
-    @GetMapping("/productBacklogs/{id}")
+    @GetMapping("/productBacklog/{id}")
     public List<Sprint> getSprintsByProductBacklog(@PathVariable(name="id") Long id) throws SQLException {
 
         ProductBacklog productBacklog  = this.productBacklogService.findProductBacklogById(id);
@@ -35,10 +36,13 @@ public class SprintController {
         }
         return sprints;
     }
-    @PostMapping("")
-    public ResponseEntity<?> createSprint() {
-        Sprint sprint = sprintService.createSprint();
-        return ResponseEntity.ok(sprint);
-    }
 
+    @PostMapping
+    public ResponseEntity<Sprint> createSprint(@RequestBody Sprint sprint, @RequestParam Long productBacklogId) {
+        sprint.setProductBacklogId(productBacklogId);
+        sprint.setVelocite(0);
+        sprint.setEtat("En attente");
+        Sprint createdSprint = sprintService.createSprint(sprint);
+        return new ResponseEntity<>(createdSprint, HttpStatus.CREATED);
+    }
 }

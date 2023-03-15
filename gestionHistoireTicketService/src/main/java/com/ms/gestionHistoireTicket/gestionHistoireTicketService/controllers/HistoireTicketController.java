@@ -28,7 +28,7 @@ public class HistoireTicketController {
         return histoireTicketService.findAllHistoireTickets();
     }
 
-    @GetMapping("/productBacklogs/{id}")
+    @GetMapping("/productBacklog/{id}")
     public List<HistoireTicket> getHistoireTicketsByProductBacklog(@PathVariable(name="id") Long id) throws SQLException {
 
         ProductBacklog productBacklog  = this.productBacklogService.findProductBacklogById(id);

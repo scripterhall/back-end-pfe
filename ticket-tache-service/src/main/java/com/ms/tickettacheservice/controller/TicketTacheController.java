@@ -1,5 +1,7 @@
 package com.ms.tickettacheservice.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +41,7 @@ public class TicketTacheController {
     public TicketTache ajouterTicketTache(TicketTache tt) {
         
         SprintBacklog sprintBacklog = this.sprintBacklogFeignClient.getSprintBacklogById(tt.getSprintBacklogId());
-        HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt.getTicketHistoryId());
+        HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt.getTicketHistoireId());
         TicketTache tt_saved =  ticketTacheService.ajouterTicketTache(tt);
         tt_saved.setHt(ht);
         tt_saved.setSprintBacklog(sprintBacklog);
@@ -53,7 +55,7 @@ public class TicketTacheController {
 
        TicketTache tt_find =ticketTacheService.getTicketTacheById(id);
        SprintBacklog sprintBacklog = this.sprintBacklogFeignClient.getSprintBacklogById(tt_find.getSprintBacklogId());
-       HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt_find.getTicketHistoryId());
+       HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt_find.getTicketHistoireId());
        if(tt_find.getMembreId()!=null){
         Membre membre = this.membreClient.getMembreById(tt_find.getMembreId());
         tt_find.setMembre(membre);
@@ -72,7 +74,7 @@ public class TicketTacheController {
     public TicketTache modifierTicketTache(TicketTache tt) {
         
         SprintBacklog sprintBacklog = this.sprintBacklogFeignClient.getSprintBacklogById(tt.getSprintBacklogId());
-        HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt.getTicketHistoryId());
+        HistoireTicket ht = this.histoireTicketFeignClient.getHistoireTicketById(tt.getTicketHistoireId());
         TicketTache tt_saved =  ticketTacheService.modifierTicketTache(tt);
         if(tt.getMembreId()!=null){
             Membre membre = this.membreClient.getMembreById(tt.getMembreId());
@@ -89,6 +91,19 @@ public class TicketTacheController {
         ticketTacheService.supprimerTicketTache(id);
     }
 
+
+    @GetMapping("/ticket-histoire/{id-ticket-histoire}")
+    public List<TicketTache> getTicketsTacheByTicketHistoireId(@PathVariable("id-ticket-histoire") Long id){
+        List<TicketTache> tts = this.ticketTacheService.getTicketTacheByHistoireTicketId(id);
+        for(TicketTache tt:tts){
+        //     tt.setSprintBacklog(this.sprintBacklogFeignClient.getSprintBacklogById(tt.getSprintBacklogId()));
+        //     if(tt.getMembreId()!=null){
+        tt.setHt(histoireTicketFeignClient.getHistoireTicketById(id));        
+        //         tt.setMembre(this.membreClient.getMembreById(tt.getMembreId()));
+        //     }
+        }
+        return tts;
+    }
 
     
 

@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @MappedSuperclass
 public abstract class Backlog {
-    //private int nbrTickets ; Le nombre de tickets (annuler::calculer)
+    
     private int velocite; //La vélocité
 
 }

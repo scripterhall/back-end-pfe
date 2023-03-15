@@ -1,5 +1,8 @@
 package com.ms.tickettacheservice.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class TicketTacheService {
 
 
     public TicketTache ajouterTicketTache(TicketTache tt){
-        if(this.ticketTacheRepository.findByTitle(tt.getTitle())==null)
+        if(this.ticketTacheRepository.findByTitre(tt.getTitre())==null)
             return this.ticketTacheRepository.save(tt);
         return null;
     } 
@@ -41,6 +44,15 @@ public class TicketTacheService {
     public void supprimerTicketTache(Long id){
 
         this.ticketTacheRepository.deleteById(id);
+    }
+
+
+    public List<TicketTache> getTicketTacheByHistoireTicketId(Long id){
+        List<TicketTache> tts = this.ticketTacheRepository.findByTicketHistoireId(id);
+        if(tts!=null)
+            return tts;
+        else
+            return Collections.emptyList();
     }
 
     //Possibilter de creation d un corbeille pour les ticket supprimer

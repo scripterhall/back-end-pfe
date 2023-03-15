@@ -25,5 +25,4 @@ public class HistoireTicket extends Ticket {
     @Transient
     private ProductBacklog productBacklog;
     private int position;
-
 }
